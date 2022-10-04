@@ -30,14 +30,17 @@ public class HashCodeEx1 {
 		for (Map.Entry<Student, Double> entry : map.entrySet()) {
 			System.out.println(entry);
 		}
+		
+//При инициализации указаны initialCapacity = 16(default) и loadFactor = 0.75(default)
+		Map<Student, String> map2 = new HashMap(16, 0.75f);
 	}
 }
 
-class Student {
+final class Student implements Comparable<Student>{
 	
-	String name;
-	String surname;
-	int course;
+	final String name;
+	final String surname;
+	final int course;
 	
 	public Student(String name, String surname, int course) {
 		this.name = name;
@@ -51,21 +54,28 @@ class Student {
 		return "Student [name=" + name + ", surname=" + surname + ", course=" + course + "]";
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(course, name, surname);
-//		return name.length() * 7 + surname.length() * 11 + course * 53;
-	}
+//	@Override
+//	public int hashCode() {
+//		return Objects.hash(course, name, surname);
+////		return name.length() * 7 + surname.length() * 11 + course * 53;
+//	}
+//
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		Student other = (Student) obj;
+//		return course == other.course && Objects.equals(name, other.name) && Objects.equals(surname, other.surname);
+//	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Student other = (Student) obj;
-		return course == other.course && Objects.equals(name, other.name) && Objects.equals(surname, other.surname);
+	public int compareTo(Student o) {
+		// TODO Auto-generated method stub
+		return this.name.compareTo(o.name);
 	}
+	
 }
