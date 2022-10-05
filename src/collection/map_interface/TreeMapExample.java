@@ -24,6 +24,7 @@ public class TreeMapExample {
 		treemap.put(7.9, st5);
 		treemap.put(8.2, st6);
 		treemap.put(9.1, st7);
+		treemap.put(null, st7);
 		
 //		treemap2.put(st1, 3.8);
 //		treemap2.put(st7, 9.1);
