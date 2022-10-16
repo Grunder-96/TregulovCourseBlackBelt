@@ -1,12 +1,13 @@
 package lambda;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 public class StudentInfo {
 	
-	void testStudents(ArrayList<Student> list, StudentChecks sc) {
+	void testStudents(ArrayList<Student> list, Predicate<Student> sc/*StudentChecks sc*/) {
 		for (Student s : list) {
-			if (sc.check(s)) {
+			if (sc.test(s)) {
 				System.out.println(s);
 			}
 		}
@@ -43,7 +44,6 @@ public class StudentInfo {
 class Test {
 	
 	public static void main(String[] args) {
-		
 		Student st1 = new Student("Alfred", 'm', 27, 3, 4.5);
 		Student st2 = new Student("Anna", 'f', 18, 1, 3.9);
 		Student st3 = new Student("Jack", 'm', 24, 5, 4.8);
@@ -56,6 +56,11 @@ class Test {
 		students.add(st4);
 		
 		StudentInfo info = new StudentInfo();
+		
+		Predicate<Student> check1 = student -> student.sex == 'm';
+		Predicate<Student> check2 = student -> student.age > 24;
+		info.testStudents(students, check1.negate());
+		
 //		info.testStudents(students, new CheckOverGrade());
 //		info.testStudents(students, new StudentChecks() {
 //			@Override
@@ -63,15 +68,16 @@ class Test {
 //				return s.age < 22;
 //			}
 //		});
-		info.testStudents(students, (Student s) -> {return s.age < 25;});
-		System.out.println();
-		info.testStudents(students, s -> s.averageGrade > 4.2);
-		System.out.println();
-		info.testStudents(students, s -> s.sex == 'f' && s.course > 1 && s.age < 25);
 		
-		System.out.print("-------------------------------------\n");
-		StudentChecks sc = s -> s.sex == 'f';
-		info.testStudents(students, sc);
+//		info.testStudents(students, (Student s) -> {return s.age < 25;});
+//		System.out.println();
+//		info.testStudents(students, s -> s.averageGrade > 4.2);
+//		System.out.println();
+//		info.testStudents(students, s -> s.sex == 'f' && s.course > 1 && s.age < 25);
+//		
+//		System.out.print("-------------------------------------\n");
+//		Predicate<Student> sc = s -> s.sex == 'f';
+//		info.testStudents(students, sc);
 		
 //		info.printStudentOverGrade(students, 4);
 //		info.printStudentUnderAge(students, 25);
@@ -79,15 +85,15 @@ class Test {
 	}
 }
 
-@FunctionalInterface
-interface StudentChecks {
-	boolean check(Student s);
-}
+//@FunctionalInterface
+//interface StudentChecks {
+//	boolean check(Student s);
+//}
 
-class CheckOverGrade  implements StudentChecks{
+class CheckOverGrade  implements Predicate<Student>/*StudentChecks*/{
 
 	@Override
-	public boolean check(Student s) {
+	public boolean test(Student s) {
 		return s.averageGrade > 4.6;
 	}
 	
