@@ -1,7 +1,9 @@
 package lambda;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.function.Function;
 
 public class StudentInfo {
 	
@@ -61,6 +63,9 @@ class Test {
 		Predicate<Student> check2 = student -> student.age > 24;
 		info.testStudents(students, check1.negate());
 		
+		System.out.println("--------------------------------");
+		System.out.println(avg(students, s2 -> (double) s2.age));
+		
 //		info.testStudents(students, new CheckOverGrade());
 //		info.testStudents(students, new StudentChecks() {
 //			@Override
@@ -82,6 +87,15 @@ class Test {
 //		info.printStudentOverGrade(students, 4);
 //		info.printStudentUnderAge(students, 25);
 //		info.printStudentMixCondition(students, 20, 4, 'f');
+	}
+	
+	private static double avg(List<Student> list, Function<Student, Double> function) {
+		double result = 0;
+		for (Student s : list) {
+			result += function.apply(s);
+		}
+		result = result / list.size();
+		return result;
 	}
 }
 
