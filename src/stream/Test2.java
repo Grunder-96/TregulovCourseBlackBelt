@@ -23,14 +23,24 @@ public class Test2 {
 		students.add(st3);
 		students.add(st4);
 		
-		students.stream()
-		.map(stud -> {
-			stud.setName(stud.getName().toUpperCase());
-			return stud;
-		})
-		.filter(stud -> stud.getSex() == 'f')
-		.sorted((stud, stud2) -> stud.getAge() - stud2.getAge())
-		.forEach(System.out::println);
+//		students.stream()
+//		.map(stud -> {
+//			stud.setName(stud.getName().toUpperCase());
+//			return stud;
+//		})
+//		.filter(stud -> stud.getSex() == 'f')
+//		.sorted((stud, stud2) -> stud.getAge() - stud2.getAge())
+//		.forEach(System.out::println);
+		
+		Student first = students.stream()
+			.map(stud -> {
+				stud.setName(stud.getName().toUpperCase());
+				return stud;
+			})
+			.filter(stud -> stud.getSex() == 'f')
+			.sorted((stud, stud2) -> stud.getAge() - stud2.getAge())
+			.findFirst().get();
+		System.out.println(first);
 		
 		System.out.println(students.stream().filter(st -> st.getAge() > 22 
 				&& st.getAverageGrade() > 4.5).collect(Collectors.toList()));
