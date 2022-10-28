@@ -1,10 +1,10 @@
 package multithreading;
 
-public class Ex10 {
+public class SynchronizedBlock1 {
 	
 	public static void main(String[] args) {
 		
-		MyRunnableImplements1 runnable = new MyRunnableImplements1();
+		MyRunnableImplements2 runnable = new MyRunnableImplements2();
 		Thread thread1 = new Thread(runnable);
 		Thread thread2 = new Thread(runnable);
 		Thread thread3 = new Thread(runnable);
@@ -14,25 +14,30 @@ public class Ex10 {
 	}
 }
 
-class Counter {
+class Counter2 {
 	
 	volatile static int count = 0;
-	
 }
 
-class MyRunnableImplements1 implements Runnable {
+class MyRunnableImplements2 implements Runnable {
 	
-	public synchronized void increment() {
-		Counter.count++;
-		System.out.print(Counter.count + " ");
-		System.out.print(" " + Thread.currentThread().getName() + "\n"); 
+	private void doWork2() {
+		System.out.println("Ура!");
+	}
+	
+	private void doWork1() {
+		doWork2();
+		synchronized(this) {
+			Counter2.count++;
+			System.out.println(Counter2.count);
+		}
 	}
 	
 	@Override
 	public void run() {
 		
 		for (int i = 0; i < 3; i++) {
-			increment();
+			doWork1();
 		}
 	}
 }
