@@ -1,23 +1,21 @@
-package thread_safe;
+package collection.thread_safe;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class CopyOnWriteArrayListEx {
+public class ConcurrentHashMapEx {
 	
 	public static void main(String[] args) {
-		CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();
-		list.add("Zaur");
-		list.add("Oleg");
-		list.add("Gennadiy");
-		list.add("Yurii");
-		list.add("Tatyana");
-		list.add("Elena");
-		System.out.println(list);
+		ConcurrentHashMap<Integer, String> map = new ConcurrentHashMap<>();
+		map.put(1, "Zaur");
+		map.put(2, "Oleg");
+		map.put(3, "Daniil");
+		map.put(4, "Peter");
+		map.put(5, "Michael");
 		
 		Runnable runnable1 = () -> {
-			Iterator<String> iterator = list.iterator();
+			Iterator<Integer> iterator = map.keySet().iterator();
 			while (iterator.hasNext()) {
 				try {
 					Thread.sleep(100);
@@ -25,18 +23,21 @@ public class CopyOnWriteArrayListEx {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				System.out.println(iterator.next());
+				Integer i = iterator.next();
+				System.out.println(i + ": " + map.get(i));
 			}
-		}; 
+		};
+		
 		Runnable runnable2 = () -> {
 			try {
-				Thread.sleep(200);
+				Thread.sleep(300);
 			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			list.remove(4);
-			list.add("Michael");
+			map.put(6, "Leonid");
 		};
+		
 		Thread thread1 = new Thread(runnable1);
 		Thread thread2 = new Thread(runnable2);
 		thread1.start();
@@ -48,6 +49,6 @@ public class CopyOnWriteArrayListEx {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(list);
+		System.out.println(map);
 	}
 }
