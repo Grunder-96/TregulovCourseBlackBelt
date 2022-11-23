@@ -1,27 +1,18 @@
 package regex;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Arrays;
 
-public class Regex1 {
+public class Regex3 {
 	
 	public static void main(String[] args) {
-		
 		String s = "Ivanov Vasiliy, Russia, Moscow, Lenin street, 51, Flat 48," +
 			       "email: vivanov@mail.ru, Postcode: AA99, Phone Number: +123456789;"
 			      +"Petrova Mariy, Ukraine, Kiyev, Lomonosov street, 33, Flat 18," +
 			       "email: masha@mail.ru, Postcode: UKR54, Phone Number: +987654321;"
 			      +"Chuck Norris, USA, Hollywood, All stars street, 87, Flat 21," +
 			       "email: chuck@gmail.com, Postcode: USA23, Phone Number: +136478952.";
-		
-//		Pattern pattern = Pattern.compile("\\w+");
-//		Pattern pattern = Pattern.compile("\\b\\d{2}\\b");
-//		Pattern pattern = Pattern.compile("\\+\\d{9}");
-//		Pattern pattern = Pattern.compile("\\w+@\\w+\\.(ru|com)");
-		Pattern pattern = Pattern.compile("\\w+@\\w+\\.(ru|com)");
-		Matcher matcher = pattern.matcher(s);
-		while (matcher.find()) {
-			System.out.println(matcher.group());
-		}
+		String s2 = "chuck@gmail.com";
+		System.out.println(s2.matches("\\w+@\\w+\\.(ru|com)"));
+		System.out.println(Arrays.toString(s.split(" ")));
 	}
 }
